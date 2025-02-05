@@ -1,12 +1,11 @@
-import TodoList from "./components/TodoList"
+import FiberDemo from "./components/FiberDemo"
 
 function App() {
 
   return (
     <>
     <div>
-      <h1>Hello WORLD</h1>
-      <TodoList/>
+      <FiberDemo/>
     </div>
     </>
   )
