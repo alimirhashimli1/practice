@@ -20,7 +20,7 @@ const FiberDemo: React.FC = () => {
   // Profiler callback to log render duration and other details
   const profilerCallback = (
     id: string,
-    phase: "mount" | "update",
+    phase: "mount" | "update" | "nested-update",
     actualDuration: number,
     baseDuration: number,
     startTime: number,

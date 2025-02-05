@@ -1,11 +1,11 @@
-import FiberDemo from "./components/FiberDemo"
+import FilterableList from "./components/FilterableList"
 
 function App() {
 
   return (
     <>
     <div>
-      <FiberDemo/>
+      <FilterableList/>
     </div>
     </>
   )
