@@ -1,11 +1,11 @@
-import FilterableList from "./components/FilterableList"
+import MultiStepForm from "./components/MultipleStepForm"
 
 function App() {
 
   return (
     <>
     <div>
-      <FilterableList/>
+      <MultiStepForm/>
     </div>
     </>
   )

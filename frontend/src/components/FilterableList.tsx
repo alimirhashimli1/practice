@@ -2,21 +2,21 @@ import { useCallback, useState } from 'react'
 
 
 const FilterableList = () => {
-    const [items, setItems] = useState<Array<string>>([]);
-    const [count, setCount] = useState(0);
+    const [items, setItems] = useState<string[]>([]);
+    const [text, setText] = useState<string>('');
 
-    const listItems = useCallback(() => {
-        setItems(Array.from({length: 20000}, (_, i) => `Item ${i}`));
-    }, [])
+  
 
-    const incrementCount = () => {
-        setCount(prev => prev + 1);
-    }
+const listItems = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+    setItems(Array.from({ length: 20000 }, (_, i) => `${e.target.value} - Item ${i}`));
+}, [setText, setItems]);
+ 
+ 
   return (
     <div>
-          <p>{count}</p>
-        <button onClick={listItems}>Render</button>
-        <button onClick={incrementCount}>Increment</button>
+       
+       <input type="text" value={text} onChange={listItems} />
         <ul>
             {items.map((item, index) => <li key={index}>{item}</li>)}
         </ul>
