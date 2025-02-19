@@ -1,13 +1,13 @@
-import TaskForm from "./components/TaskForm"
-import TaskList from "./components/TaskList"
+import AddUserForm from "./components/AddUserForm"
+import UserList from "./components/UserList"
 
 function App() {
 
   return (
     <>
     <div>
-      <TaskForm/>
-      <TaskList/>
+      <AddUserForm/>
+      <UserList/>
     </div>
     </>
   )

@@ -1,49 +1,48 @@
-import { useEffect, useState } from 'react';
-
-
+import {useEffect} from 'react';
+import {useUserContext} from './context/UserContext';
 
 interface User {
-    id: number;
-    name: string;
-  }
-  
+  id: number;
+  name: string;
+  email: string;
+}
+
 const UserList = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {state, dispatch} = useUserContext();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://api.example.com/users');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setUsers(data);
-        setLoading(false);
-      } catch (error) {
-        setError((error as Error).message);
-        setLoading(false);
-      }
-    };
+    dispatch({type: "SET_LOADING", payload: true});
+      fetchUsers();
+  }, [dispatch])
 
-    fetchData();
-  }, []);
+  const fetchUsers = async () => {
+    const response = await fetch("http://localhost:8000");
+    const data = await response.json();
+    if(data){
+      dispatch({type: "SET_USERS",payload: data})
+    } else{
+      console.error("Failed to fetch users");
+    }
+  }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if(state.loading){
+    return <p>Loading...</p>
+  }
 
   return (
     <div>
-      <h2>User List</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      {state.users.length === 0 ? (
+        <p>No users found</p>
+      ) : (
+        state.users.map((user: User) => (
+          <div key={user.id}>
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+          </div>
+        ))
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default UserList;
+export default UserList
