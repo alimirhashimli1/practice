@@ -1,11 +1,13 @@
-import MultiStepForm from "./components/MultipleStepForm"
+import TaskForm from "./components/TaskForm"
+import TaskList from "./components/TaskList"
 
 function App() {
 
   return (
     <>
     <div>
-      <MultiStepForm/>
+      <TaskForm/>
+      <TaskList/>
     </div>
     </>
   )

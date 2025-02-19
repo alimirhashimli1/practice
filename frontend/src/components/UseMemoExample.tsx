@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo, memo } from "react";
 
-const UseMemoExample = () => {
+const UseMemoExample = memo(() => {
   const [number, setNumber] = useState<number>(0);
 
   // Base code where you will implement the factorial calculation using useMemo
@@ -26,6 +26,6 @@ const UseMemoExample = () => {
       <h3>Factorial of {number}: {factorial}</h3>
     </div>
   );
-};
+});
 
 export default UseMemoExample;
