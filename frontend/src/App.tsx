@@ -1,13 +1,11 @@
-import AddUserForm from "./components/AddUserForm"
-import UserList from "./components/UserList"
+import ShopApp from "./components/ShopApp"
 
 function App() {
 
   return (
     <>
     <div>
-      <AddUserForm/>
-      <UserList/>
+      <ShopApp/>
     </div>
     </>
   )
