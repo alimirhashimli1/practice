@@ -1,36 +1,8 @@
-// Funtional requirements
-/* 
-Users can enter a note title and body
-Pressing "Add Note" creates a new note with timestamp
-Show all notes in a list or card layout
-Each note shows the title, creation date, and preview of the body
-Users can click "Edit" on a note to change its title and body
-Users can save changes or cancel the edit
-Users can remove notes with a "Delete" button
-A search bar filters notes in real time by title and body content
-Notes are saved to and loaded from local storage
-*/
 
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { Suspense } from "react";
 
 const TodoItem = React.lazy(() => import("./TodoItem"))
-
-
-
-// Non-funtional requirements
-/* Intuitive UI/UX with clear buttons and form fields
-  Keyboard-accessible controls for all actions
-  Instant feedback when creating/editing/deleting notes.
-  Efficient rendering of note lists.
-  Mobile-friendly design using Tailwind CSS or similar.
-  Notes should look good on small and large screens
-  Input fields and buttons should have associated labels.
-  Use clear, modular code structure
-  Separate components for scalability
-  Use Typescript for strong typing
-  Use functional components and hooks
-*/
 
 
 interface Todo {

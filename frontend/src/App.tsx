@@ -6,7 +6,7 @@
 /* Users can edit, delete transaction, filter by category or date range, search transactions by title, all data is saved and loaded from local storage
 /* Allow CSV export of transactions */
 
-import TransactionApp from "./components/TransactionApp"
+import TransactionApp from "./components/TransactionApp/TransactionApp"
 
 /* 
   Responsive accessible UI
