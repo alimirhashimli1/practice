@@ -1,135 +1,74 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import { Transaction } from "./types";
+// components/TransactionApp/index.tsx
+import React, { useMemo } from "react";
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { Transaction } from "./types";
+import {
+  addTransaction,
+  deleteTransaction,
+  editTransaction,
+  sortTransactions
+} from "../../features/transactions/transactionsSlice";
 
+const TransactionApp: React.FC = () => {
+  const [selectedTransaction, setSelectedTransaction] = React.useState<Transaction | null>(null);
+  const dispatch = useDispatch();
+  const transactions = useSelector((state: RootState) => state.transactions.transactions);
 
-const LOCAL_STORAGE_KEY = "transaction_key";
+  const transactionSum = useMemo(() => {
+    return transactions.reduce((acc, curr) => {
+      return curr.category === "income" ? acc + curr.amount : acc - curr.amount;
+    }, 0);
+  }, [transactions]);
 
-export const TransactionApp: React.FC = () => {
-  const [title, setTitle] = useState<string>("");
-  const [amount, setAmount] = useState<number | null>(0);
-  const [category, setCategory] = useState<string>("");
-  const [transactionArr, setTransactionArr] = useState<Transaction[]>([]);
-  const [error, setError] = useState<string>("");
-  const [loaded, setLoaded] = useState<boolean>();
-  const [transactionSum, setTransactionSum] = useState<number>(0);
-  const [editTransaction, setEditTransaction] = useState<string | null>("")
-  const [editTitle, setEditTitle] = useState<string>("");
-  const [editAmount, setEditAmount] = useState<number | null>(0);
-  const [editCategory, setEditCategory] = useState<string>("");
-  const [sorted, setSorted] = useState<boolean>(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      setTransactionArr(JSON.parse(stored));
-    }
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (loaded) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactionArr));
-    }
-  }, [loaded, transactionArr]);
-
-
-  const addTransaction = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!title.trim() || !category || amount === null) {
-      setError("All fields are required");
-      return;
-    }
-    const currentDate = new Date().toLocaleDateString();
+  const handleAddTransaction = (title: string, amount: number, category: string) => {
     const newTransaction: Transaction = {
       title,
       amount,
       category,
-      date: currentDate,
+      date: new Date().toLocaleDateString(),
     };
+  
+    if (selectedTransaction) {
+      dispatch(editTransaction(newTransaction));
+      setSelectedTransaction(null); 
+    } else {
+      dispatch(addTransaction(newTransaction));
+    }
+  };
+  
 
-    setTransactionArr([newTransaction, ...transactionArr]);
-    setError("");
-    setTitle("");
-    setAmount(0);
-    setCategory("");
+  const handleEditTransaction = (t: Transaction) => {
+    setSelectedTransaction(t);
+  };
+  
+  const handleDelete = (title: string) => {
+    dispatch(deleteTransaction(title));
   };
 
-  const setEdit = (title: string) => {
-    const transaction = transactionArr.find(transaction => transaction.title === title)
-    if(!transaction)return
-    setEditTitle(transaction.title)
-    setEditAmount(transaction.amount)
-    setEditCategory(transaction.category)
-    setEditTransaction(title)
-
-  }
-
-  const setSave = (title: string) => {
-      const currentDate = new Date().toLocaleDateString()
-    setTransactionArr(prev => prev.map(
-        transaction => transaction.title === title ? {title: editTitle.trim(), amount: editAmount ?? 0, category: editCategory, date: currentDate} : transaction
-    ))
-    setEditTransaction(null)
-    setEditCategory("")
-    setEditAmount(0)
-    setEditTitle("")
-  }
-
-  const sortTransactions = () => {
-    const sortedTransactions = [...transactionArr].sort((a, b) => {
-      if(sorted){
-        return a.title.localeCompare(b.title);
-      } else {
-        return b.title.localeCompare(a.title);
-      }
-    })
-    setSorted(!sorted);
-    setTransactionArr(sortedTransactions);
-  }
-
-
-
-  const calculateSum = useCallback(() => {
-    const sum = transactionArr.reduce((acc, curr) => {
-      return curr.category === "income" ? acc + curr.amount : acc - curr.amount;
-    }, 0);
-    setTransactionSum(sum);
-  }, [transactionArr]);
-
-  useEffect(() => {
-    calculateSum();
-  }, [calculateSum]);
-
-  const deleteTransaction = (transactionTitle: string) => {
-    const findTransaction = transactionArr.filter(
-      (transaction) => transaction.title !== transactionTitle
-    );
-    setTransactionArr(findTransaction);
+  const handleSort = () => {
+    dispatch(sortTransactions());
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
-    <TransactionForm addTransaction={addTransaction} setTitle={setTitle} setAmount={setAmount} setCategory={setCategory} title={title} amount={amount} category={category}/>
-    <p className="min-h-[1.5rem]">{ error && <p className="text-red-600">{error}</p>}</p>
-    <TransactionList 
-    transactionArr={transactionArr}
-    editTransaction={editTransaction}
-    setEditTransaction={setEditTransaction}
-    editTitle={editTitle}
-    setEditTitle={setEditTitle}
-    editAmount={editAmount}
-    setEditAmount={setEditAmount}
-    editCategory={editCategory}
-    setEditCategory={setEditCategory}
-    setSave={setSave}
-    deleteTransaction={deleteTransaction}
-    transactionSum={transactionSum}
-    sortTransactions={sortTransactions}
-    setEdit={setEdit}
-    />
+    <div className="min-h-screen bg-gray-50 py-8 px-4 flex justify-center items-start">
+    <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-gray-800 text-center">💸 Transaction Tracker</h1>
+      <TransactionForm onAdd={handleAddTransaction} selectedTransaction={selectedTransaction}/>
+      
+      <div className="border-t pt-4">
+     
+      <TransactionList
+        transactions={transactions}
+        onEdit={handleEditTransaction}
+        onDelete={handleDelete}
+        onSort={handleSort}
+        transactionSum={transactionSum}
+      />
+     </div>
+      </div>
     </div>
   );
 };
