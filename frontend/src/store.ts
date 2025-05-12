@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import transactionReducer from './features/transactions/transactionsSlice';
+import todoReducer from "./features/todo/todosSlice"
 
 const store = configureStore({
     reducer: {
-        transactions: transactionReducer
+        transactions: transactionReducer,
+        todos: todoReducer
     }
 });
 

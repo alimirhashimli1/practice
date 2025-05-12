@@ -34,7 +34,7 @@ const transactionSlice = createSlice({
           ? b.title.localeCompare(a.title)
           : a.title.localeCompare(b.title)
       );
-      state.sorted = !state.sorted;
+      state.sorted = !state.sorted; 
     },
   },
 });

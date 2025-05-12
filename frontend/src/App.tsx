@@ -6,7 +6,7 @@
 /* Users can edit, delete transaction, filter by category or date range, search transactions by title, all data is saved and loaded from local storage
 /* Allow CSV export of transactions */
 
-import TransactionApp from "./components/TransactionApp/TransactionApp"
+import TodoApp from "./components/TodoApp/TodoApp"
 
 /* 
   Responsive accessible UI
@@ -25,7 +25,7 @@ function App() {
   return (
     <>
     <div className="min-h-screen flex flex-col items-center justify-center">
-    <TransactionApp/>
+    <TodoApp/>
    </div>
     </>
   )
