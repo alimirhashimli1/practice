@@ -4,8 +4,8 @@ import todoReducer from "./features/todo/todosSlice"
 
 const store = configureStore({
     reducer: {
-        transactions: transactionReducer,
-        todos: todoReducer
+        todos: todoReducer,
+        transactions: transactionReducer
     }
 });
 
