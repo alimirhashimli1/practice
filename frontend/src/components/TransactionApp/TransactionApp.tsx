@@ -9,6 +9,9 @@ const TransactionApp: React.FC = () => {
   const [category, setCategory] = useState<string>('');
   const [amount, setAmount] = useState<number | null>(null);
   const [error, setError] = useState<string>('');
+  const [editedTitle, setEditedTitle] = useState<string>('');
+  const [editedCategory, setEditedCategory] = useState<string>('');
+  const [editedAmount, setEditedAmount] = useState<number | null>(null);
   const dispatch = useDispatch();
   const transactions = useSelector((state: RootState) => state.transactions.transactions);
   const balance = useSelector((state: RootState) => state.transactions.balance)
@@ -41,6 +44,12 @@ const TransactionApp: React.FC = () => {
     }
     handleAddTransaction(title, amount, category, new Date().toLocaleDateString());
   };
+
+  const handleEdit = (transactionTitle: string, transactionAmount: number, transactionCategory: string) => {
+    setEditedAmount(transactionAmount);
+    setEditedCategory(transactionCategory);
+    setEditedTitle(transactionTitle);
+  }
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-2xl rounded-xl border border-gray-200">
@@ -108,6 +117,12 @@ const TransactionApp: React.FC = () => {
               <p className={`font-bold ${transaction.category === 'Income' ? 'text-green-600' : 'text-red-500'}`}>
                 ${transaction.amount}
               </p>
+              <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEdit(transaction.title, transaction.amount, transaction.category)
+              }}
+              className={`px-4 py-2 text-sm rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 border-blue-600 text-blue-600 hover:bg-blue-100`}>Edit</button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
