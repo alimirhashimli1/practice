@@ -40,9 +40,13 @@ const transactionSlice = createSlice({
     },
     deleteTransaction: (state, action: PayloadAction<string>) => {
       state.transactions = state.transactions.filter(
-        (transaction) => transaction.title !== action.payload
+        (transaction) => transaction.id !== action.payload
       );
     },
+    saveTransaction: (state, action: PayloadAction<Transaction>) => {
+      state.transactions = state.transactions.map(transaction => transaction.id === action.payload.id ? action.payload : transaction)
+    }
+    ,
 
     calculateSum: (state) => {
       state.balance = state.transactions.reduce((acc, curr) => {
@@ -54,6 +58,6 @@ const transactionSlice = createSlice({
   },
 });
 
-export const { addTransaction, deleteTransaction, calculateSum } =
+export const { addTransaction, deleteTransaction, calculateSum, saveTransaction } =
   transactionSlice.actions;
 export default transactionSlice.reducer;
