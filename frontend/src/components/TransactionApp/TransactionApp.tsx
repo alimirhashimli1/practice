@@ -7,6 +7,7 @@ import {
   calculateSum,
   deleteTransaction,
   saveTransaction,
+  sortTransaction,
 } from "../../features/transactions/transactionsSlice";
 
 const TransactionApp: React.FC = () => {
@@ -232,6 +233,7 @@ const TransactionApp: React.FC = () => {
         ))}
       </ul>
       <p>Sum: {balance}</p>
+      <button onClick={() => dispatch(sortTransaction())}>Sort</button>
     </div>
   );
 };

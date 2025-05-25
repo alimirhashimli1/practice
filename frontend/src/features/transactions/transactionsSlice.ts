@@ -55,9 +55,19 @@ const transactionSlice = createSlice({
           : acc - curr.amount;
       }, 0);
     },
+    sortTransaction: (state) => {
+      if(state.sorted) {
+        state.transactions = [...state.transactions].sort((a,b) => b.title.localeCompare(a.title))
+      } else {
+         state.transactions = [...state.transactions].sort((a,b) => a.title.localeCompare(b.title))
+      }
+      state.sorted = !state.sorted
+    }
   },
 });
 
-export const { addTransaction, deleteTransaction, calculateSum, saveTransaction } =
+export const { addTransaction, deleteTransaction, calculateSum, saveTransaction, sortTransaction } =
   transactionSlice.actions;
 export default transactionSlice.reducer;
+
+
