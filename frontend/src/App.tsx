@@ -6,7 +6,8 @@
 /* Users can edit, delete transaction, filter by category or date range, search transactions by title, all data is saved and loaded from local storage
 /* Allow CSV export of transactions */
 
-import ToggleApp from "./components/ThemeToggle/ToggleApp"
+import LanguageToggle from "./components/LanguageToggle/LanguageToggle"
+// import ToggleApp from "./components/ThemeToggle/ToggleApp"
 
 /* 
   Responsive accessible UI
@@ -25,7 +26,8 @@ function App() {
   return (
     <>
     <div className="min-h-screen flex flex-col items-center justify-center">
-    <ToggleApp/>
+   <LanguageToggle/>
+     
    </div>
     </>
   )
