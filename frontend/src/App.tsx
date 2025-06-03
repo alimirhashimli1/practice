@@ -1,5 +1,8 @@
 // Updated Functional Requirements:
 
+import Login from "./components/Register/Login"
+import Register from "./components/Register/Register"
+
 // The user shall be presented with a login page by default.
 
 // The user shall be able to navigate to the registration page if not registered.
@@ -56,7 +59,7 @@ function App() {
   return (
     <>
     <div className="min-h-screen flex flex-col items-center justify-center">
-       
+       <Login/>
    </div>
     </>
   )
