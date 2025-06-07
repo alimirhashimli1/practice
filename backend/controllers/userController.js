@@ -72,4 +72,20 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const editUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
+    const updatedUser = await User.update( { username, email, password }, { where: { id }} )
+    if(updatedUser) {
+      res.status(200).json({message: "User updated successfully", updatedUser});
+    } else {
+      res.status(404).json( {message: "User not found"} )
+    }
+  } catch (error) {
+    res.status(500).json({error: "Failed to update user"})
+  }
+}
+
+
 module.exports = { registerUser, loginUser, getAllUsers, getUser, deleteUser };
