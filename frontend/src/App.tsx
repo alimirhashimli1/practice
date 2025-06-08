@@ -1,7 +1,9 @@
 // Updated Functional Requirements:
 
+import Home from "./components/Register/Home";
 import Login from "./components/Register/Login"
-import Register from "./components/Register/Register"
+import Register from "./components/Register/Register";
+import { BrowserRouter as Router ,Routes, Route } from "react-router-dom";
 
 // The user shall be presented with a login page by default.
 
@@ -59,7 +61,13 @@ function App() {
   return (
     <>
     <div className="min-h-screen flex flex-col items-center justify-center">
-       <Login/>
+      <Router>
+        <Routes>
+          <Route path="/home" element={<Home />}/>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
    </div>
     </>
   )

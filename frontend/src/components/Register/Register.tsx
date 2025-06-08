@@ -1,5 +1,6 @@
 import React, {  useState } from 'react'
 import { User } from './type';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
+  const navigate = useNavigate();
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,6 +38,8 @@ const Register = () => {
       if(respone.ok){
         console.log('User logged successfully', data);
         setSuccess('User logged successfully');
+                    navigate('/home');
+
       } else {
         console.log('User login failed', data);
       }
@@ -109,6 +113,12 @@ const Register = () => {
   >
     Register
   </button>
+    <p className="text-center text-sm text-gray-600 mt-4">
+        Already have an account?{' '}
+        <Link to="/login" className="text-blue-600 hover:underline">
+          Login here
+        </Link>
+      </p>
 </form>
 
   )

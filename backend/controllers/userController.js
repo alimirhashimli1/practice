@@ -76,12 +76,23 @@ const editUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { username, email, password } = req.body;
-    const updatedUser = await User.update( { username, email, password }, { where: { id }} )
-    if(updatedUser) {
-      res.status(200).json({message: "User updated successfully", updatedUser});
-    } else {
-      res.status(404).json( {message: "User not found"} )
+    const updatedUser = await User.findByPk( id )
+    if(!updatedUser){
+      return res.status(404).json({error: "User not found"});
     }
+    if(username) updatedUser.username = username;
+    if(email) updatedUser.email = email;
+    if(password) {
+      const salt = await bcrypt.genSalt(10);
+      updatedUser.password = await bcrypt.hash(password, salt);
+    }
+
+    await updatedUser.save();
+    res.status(200).json({message: "User updated successfully", updatedUser: {
+      id: updatedUser.id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+    }});
   } catch (error) {
     res.status(500).json({error: "Failed to update user"})
   }
