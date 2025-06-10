@@ -43,7 +43,7 @@ function Login() {
       className="max-w-md mx-auto mt-10 p-8 bg-white shadow-lg rounded-2xl space-y-6"
     >
       <h2 className="text-2xl font-bold text-center text-gray-800">Login an Account</h2>
-
+    <h1>this is a header</h1>
       <div>
         <label className="block text-gray-700 font-medium mb-1">Email</label>
         <input
