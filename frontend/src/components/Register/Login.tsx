@@ -56,7 +56,7 @@ function Login() {
       </div>
 
       <div>
-        <label className="block text-gray-700 font-medium mb-1">Keyword</label>
+        <label className="block text-gray-700 font-medium mb-1">Password</label>
         <input
           type="password"
           placeholder="Enter your password"
